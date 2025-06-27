@@ -8,6 +8,8 @@
     <link href="{{ asset('css/Bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/Bootstrap-icon/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminstyle.css') }}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <title>Admin Panel</title>
 </head>
 

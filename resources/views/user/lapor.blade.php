@@ -30,7 +30,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="lokasi" class="form-label fw-bold">Lokasi Banjir</label>
-                                <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Contoh: Jl. Mawar No. 12, Jakarta Timur">
+                                <input type="text" id="lokasi" name="lokasi" class="form-control mb-2" readonly>
+
+                                <!-- Hidden input untuk lat & lng -->
+                                <input type="hidden" id="latitude" name="latitude">
+                                <input type="hidden" id="longitude" name="longitude">
+
+                                <!-- Elemen untuk peta -->
+                                <div id="map" style="height: 300px;"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="urgensi" class="form-label fw-bold">Urgensi Banjir</label>
@@ -73,6 +80,8 @@
 
 @section('script')
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
     function previewImage(event) {
         const input = event.target;
@@ -89,5 +98,42 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Titik default (Bekasi)
+        const defaultLat = -6.241586;
+        const defaultLng = 106.992416;
+
+        const map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+        // Tambahkan layer OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Marker default
+        const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+        // Update koordinat ke input form
+        function updateLatLng(lat, lng) {
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            document.getElementById('lokasi').value = `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+        }
+
+        // Saat marker digeser
+        marker.on('dragend', function (e) {
+            const position = marker.getLatLng();
+            updateLatLng(position.lat, position.lng);
+        });
+
+        // Saat klik di peta
+        map.on('click', function (e) {
+            marker.setLatLng(e.latlng);
+            updateLatLng(e.latlng.lat, e.latlng.lng);
+        });
+
+        // Set awal ke input
+        updateLatLng(defaultLat, defaultLng);
+    });
 </script>
 @endsection

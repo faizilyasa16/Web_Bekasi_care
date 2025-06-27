@@ -14,15 +14,19 @@ return new class extends Migration
             // Relasi ke users
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('urgensi', ['sangat-tinggi', 'tinggi', 'normal', 'rendah', 'sangat-rendah'])->default('normal');
+
             // Informasi laporan
             $table->string('lokasi');
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->text('keluhan');
             $table->text('kebutuhan')->nullable();
-            $table->string('foto')->nullable(); // bisa untuk path gambar bukti kejadian
+            $table->string('foto')->nullable();
 
             $table->timestamps();
         });
     }
+
 
     public function down(): void
     {

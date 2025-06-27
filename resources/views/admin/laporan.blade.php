@@ -170,12 +170,21 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <img src="{{ asset('storage/' . $laporan->foto) }}" class="img-fluid mb-3" alt="">
+                                            @if ($laporan->foto)
+                                                <img src="{{ asset('storage/' . $laporan->foto) }}" class="img-fluid mb-3" alt="Foto Laporan">
+                                            @endif
+
                                             <p><strong>Nama Pengirim:</strong> {{ $laporan->user->name }}</p>
-                                            <p><strong>Lokasi Kejadian:</strong> {{ $laporan->lokasi }}</p>
-                                            <p><strong>Tanggal Laporan:</strong> {{ $laporan->created_at }}</p>
+                                            <p><strong>Tanggal Laporan:</strong> {{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y, H:i') }}</p>
                                             <p><strong>Keluhan:</strong> {{ $laporan->keluhan }}</p>
-                                            <p><strong>Kebutuhan:</strong> {{ $laporan->kebutuhan }}</p>
+                                            <p><strong>Kebutuhan:</strong> {{ $laporan->kebutuhan ?? '-' }}</p>
+
+                                            @if ($laporan->latitude && $laporan->longitude)
+                                                <p><strong>Lokasi Kejadian:</strong> Lat: {{ $laporan->latitude }}, Lng: {{ $laporan->longitude }}</p>
+                                                <div id="map-{{ $laporan->id }}" style="height: 200px;" class="mb-3 rounded border"></div>
+                                            @else
+                                                <p class="text-muted"><em>Lokasi belum tersedia.</em></p>
+                                            @endif
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -183,6 +192,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
                 @empty
@@ -195,4 +205,38 @@
 
 
     </div>
+@endsection
+
+@section('script')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    @foreach ($laporans as $laporan)
+        @if ($laporan->latitude && $laporan->longitude)
+            const lat{{ $laporan->id }} = {{ $laporan->latitude }};
+            const lng{{ $laporan->id }} = {{ $laporan->longitude }};
+
+            const map{{ $laporan->id }} = L.map('map-{{ $laporan->id }}').setView([lat{{ $laporan->id }}, lng{{ $laporan->id }}], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map{{ $laporan->id }});
+
+            L.marker([lat{{ $laporan->id }}, lng{{ $laporan->id }}]).addTo(map{{ $laporan->id }})
+                .bindPopup("Lokasi Banjir")
+                .openPopup();
+
+            // 🔥 Tambahkan ini untuk memastikan peta me-refresh saat modal dibuka
+            const modalId = '#detailModal{{ $laporan->id }}';
+            const modal = document.querySelector(modalId);
+            modal.addEventListener('shown.bs.modal', function () {
+                map{{ $laporan->id }}.invalidateSize();
+            });
+        @endif
+    @endforeach
+});
+
+</script>
 @endsection

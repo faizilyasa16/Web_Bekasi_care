@@ -30,6 +30,8 @@ class LaporanController extends Controller
             'kebutuhan' => 'nullable|string',
             'urgensi' => 'required|in:sangat-tinggi,tinggi,normal,rendah,sangat-rendah',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
         ]);
 
         // Handle file foto jika ada
@@ -37,12 +39,13 @@ class LaporanController extends Controller
             $validated['foto'] = $request->file('foto')->store('laporan', 'public');
         }
 
-        $validated['user_id'] = auth()->id(); // ambil ID dari user yang login
+        $validated['user_id'] = auth()->id(); // Ambil ID user yang login
 
         Laporan::create($validated);
 
         return redirect()->back()->with('success', 'Laporan berhasil dikirim.');
     }
+
 public function updateStatus(Request $request, $id)
 {
     $request->validate([

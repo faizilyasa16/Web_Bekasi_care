@@ -18,6 +18,8 @@ class Laporan extends Model
         'urgensi',
         'kebutuhan',
         'foto',
+        'latitude',
+        'longitude',
         'status',
     ];
 

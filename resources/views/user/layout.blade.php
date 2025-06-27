@@ -6,6 +6,7 @@
   <title>Bekasi Care</title>
   <link rel="stylesheet" href="{{ asset('css/Bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/Bootstrap-icon/font/bootstrap-icons.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     @font-face {
     font-family: 'Poppins';
