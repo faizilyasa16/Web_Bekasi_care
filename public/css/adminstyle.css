@@ -1,0 +1,220 @@
+:root {
+  --main-bg-color:  #ffffff;      /* Hitam */
+  --main-text-color: #FFD700;    /* Putih */
+  --second-text-color: #0048E8;  /* Abu-abu */
+  --second-bg-color: #D3D3D3;    /* Putih */
+}
+
+    @font-face {
+    font-family: 'Poppins';
+    src: url(../font/poppins/WebFonts/Poppins/Poppins-Bold.woff);
+    }
+
+    @font-face {
+        font-family: 'Kantumury';
+        src: url(../font/kantumury/webfonts/kantumruy-pro-khmer-400-normal.woff);
+    }
+
+    @font-face {
+        font-family: 'Poppins-Light';
+        src: url(../font/poppins/WebFonts/Poppins/Poppins-Light.woff);
+    }
+    .poppins {
+        font-family: 'Poppins', sans-serif;
+    }
+    .poppins-light {
+        font-family: 'Poppins-Light', sans-serif;
+    }
+    .kantumury {
+        font-family: 'Kantumury', sans-serif;
+    }
+.auth {
+    overflow-x: hidden;
+    background-color: #FFF9C4;
+    background-image: url('/img/design.webp'); /* Gunakan path relatif */
+    background-size: auto;
+}
+.btn-in {
+    display: flex;
+    justify-content: center; /* Tengahkan horizontal */
+    align-items: center; /* Tengahkan vertikal jika butuh */
+  }
+  .button {
+    cursor: pointer;
+    border: 0;
+    background: #ee6352;
+    color: white;
+    padding: 10px 20px;
+    position: relative;
+    border-radius: 10px;
+    font-family: heviatas;
+    overflow: hidden;
+    display: inline-block;
+    font-size: 1em;
+  }
+  
+  .button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 300ms ease-in-out;
+    z-index: 1;
+    pointer-events: none;
+
+  }
+  
+  .button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  .button span {
+    position: relative;
+    z-index: 2; 
+  }
+  .primary-text {
+    color: var(--main-text-color);
+  }
+  
+  .second-text {
+    color: var(--second-text-color);
+  }
+  
+  .primary-bg {
+    background-color: var(--main-bg-color);
+  }
+  
+  .secondary-bg {
+    background-color: var(--second-bg-color);
+  }
+  
+  .rounded-full {
+    border-radius: 100%;
+  }
+  
+  #wrapper {
+    overflow-x: hidden;
+    background-color: var(--second-bg-color);
+  }
+  
+  #sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin 0.25s ease-out;
+    -moz-transition: margin 0.25s ease-out;
+    -o-transition: margin 0.25s ease-out;
+    transition: margin 0.25s ease-out;
+  }
+  
+  #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+  }
+  
+  #sidebar-wrapper .list-group {
+    width: 15rem;
+  }
+  #sidebar-wrapper .list-group-item:hover {
+    color: var(--main-text-color) !important;
+  }
+
+  #page-content-wrapper {
+    min-width: 100vw;
+  }
+  
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+  }
+  
+  #menu-toggle {
+    cursor: pointer;
+  }
+  
+  .list-group-item {
+    border: none;
+    color: #ffffff;
+    padding: 20px 30px;
+  }
+  
+  .list-group-item.active {
+    background-color: transparent;
+    color: var(--main-text-color);
+    font-weight: bold;
+    border: none;
+  }
+  .nav-color {
+    color: white;
+  }
+  .table {
+    --bs-table-bg: transparent !important;
+
+  }
+  .input-group .form-control {
+    background-color: transparent !important;
+}
+.title {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background:var(--second-bg-color);
+  padding: 0 15px;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+  white-space: nowrap; /* Biar teks nggak pindah ke bawah */
+  font-family: heviatas;
+  color: black;
+}
+
+.form-store {
+  margin-top: 50px;
+}
+
+.title::before {
+  right: 100%;
+  margin-right: 10px;
+}
+
+.title::after {
+  left: 100%;
+  margin-left: 10px;
+}
+@media (max-width: 768px) {
+  .title {
+      font-size: 1.4em; /* Sedikit kecilin biar pas */
+      padding: 0 0px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .container {
+    border: none !important; /* Hilangkan border */
+}
+.form-store {
+  margin-top: 0;
+}
+}
+  @media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+  
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+  
+    #wrapper.toggled #sidebar-wrapper {
+      margin-left: -15rem;
+    }
+  }
+  
